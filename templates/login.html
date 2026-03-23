@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — LibManager</title>
+    <meta name="description" content="Sign in to your LibManager account">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/flowbite@4/dist/flowbite.min.css" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'] } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .input-field { transition: all 0.2s ease; }
+        .input-field:focus { box-shadow: 0 0 0 3px rgba(59,130,246,0.15); }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen flex">
+
+    <!-- Left Panel — Brand -->
+    <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-800 relative overflow-hidden flex-col justify-between p-12">
+        <!-- Decorative circles -->
+        <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3"></div>
+        <div class="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full translate-y-1/2 -translate-x-1/3"></div>
+        <div class="absolute top-1/2 left-1/2 w-48 h-48 bg-white/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+
+        <!-- Logo -->
+        <div class="relative z-10 flex items-center gap-3">
+            <div class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30">
+                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+                </svg>
+            </div>
+            <span class="text-white font-bold text-xl">LibManager</span>
+        </div>
+
+        <!-- Center Headline -->
+        <div class="relative z-10">
+            <h2 class="text-4xl font-extrabold text-white mb-4 leading-tight">
+                Your library,<br>beautifully managed.
+            </h2>
+            <p class="text-blue-100 text-lg">Track books, patrons, and loans with ease. Built for modern libraries.</p>
+
+            <!-- Stats row -->
+            <div class="flex gap-8 mt-10">
+                <div>
+                    <p class="text-3xl font-extrabold text-white">110+</p>
+                    <p class="text-blue-200 text-sm mt-1">Books catalogued</p>
+                </div>
+                <div>
+                    <p class="text-3xl font-extrabold text-white">60+</p>
+                    <p class="text-blue-200 text-sm mt-1">Active patrons</p>
+                </div>
+                <div>
+                    <p class="text-3xl font-extrabold text-white">100%</p>
+                    <p class="text-blue-200 text-sm mt-1">Uptime</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="relative z-10">
+            <p class="text-blue-200 text-sm">© 2025 LibManager. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- Right Panel — Form -->
+    <div class="w-full lg:w-1/2 flex items-center justify-center p-6 sm:p-12">
+        <div class="w-full max-w-md">
+            <!-- Mobile logo -->
+            <div class="flex items-center gap-2 mb-8 lg:hidden">
+                <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+                    </svg>
+                </div>
+                <span class="font-bold text-gray-900 text-lg">LibManager</span>
+            </div>
+
+            <div class="mb-8">
+                <h1 class="text-3xl font-extrabold text-gray-900 mb-2">Welcome back</h1>
+                <p class="text-gray-500">Sign in to your account to continue</p>
+            </div>
+
+            <!-- Django messages -->
+            {% if messages %}
+            {% for message in messages %}
+            <div class="mb-4 flex items-center gap-3 p-4 rounded-xl border
+                {% if message.tags == 'success' %}bg-green-50 border-green-200 text-green-700
+                {% elif message.tags == 'error' %}bg-red-50 border-red-200 text-red-700
+                {% else %}bg-blue-50 border-blue-200 text-blue-700{% endif %}">
+                <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+                <p class="text-sm font-medium">{{ message }}</p>
+            </div>
+            {% endfor %}
+            {% endif %}
+
+            <!-- Form errors -->
+            {% if form.non_field_errors %}
+            <div class="mb-4 p-4 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm">
+                {% for error in form.non_field_errors %}{{ error }}{% endfor %}
+            </div>
+            {% endif %}
+
+            <form method="post" class="space-y-5">
+                {% csrf_token %}
+                <!-- Username -->
+                <div>
+                    <label class="block text-sm font-semibold text-gray-700 mb-1.5">Username</label>
+                    <input type="text" name="username" id="id_username" autocomplete="username" required
+                        class="input-field w-full px-4 py-3 text-sm text-gray-900 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+                        placeholder="Enter your username"
+                        value="{{ form.username.value|default:'' }}">
+                    {% if form.username.errors %}
+                    <p class="mt-1.5 text-xs text-red-600">{{ form.username.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <!-- Password -->
+                <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                        <label class="text-sm font-semibold text-gray-700">Password</label>
+                    </div>
+                    <input type="password" name="password" id="id_password" autocomplete="current-password" required
+                        class="input-field w-full px-4 py-3 text-sm text-gray-900 bg-white border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none shadow-sm"
+                        placeholder="Enter your password">
+                    {% if form.password.errors %}
+                    <p class="mt-1.5 text-xs text-red-600">{{ form.password.errors.0 }}</p>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="w-full py-3 px-4 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 focus:ring-4 focus:ring-blue-300">
+                    Sign In
+                </button>
+            </form>
+
+            <p class="mt-6 text-center text-sm text-gray-500">
+                Don't have an account?
+                <a href="{% url 'signup' %}" class="font-semibold text-blue-600 hover:text-blue-700 transition-colors">Create one</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@4/dist/flowbite.min.js"></script>
+</body>
+</html>

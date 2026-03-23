@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <nav class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-5">
+        <a href="{% url 'borrow_list' %}" class="hover:text-teal-600 dark:hover:text-teal-400 transition-colors">Borrows</a>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <span class="text-gray-900 dark:text-white font-medium">Edit Borrow</span>
+    </nav>
+
+    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-teal-500 to-emerald-600">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-white">Edit Borrow Record</h2>
+                    <p class="text-sm text-teal-100">Update borrow dates or mark as returned</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-6">
+            <form method="post" class="space-y-5">
+                {% csrf_token %}
+                {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block mb-1.5 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                        {{ field.label }}
+                        {% if field.field.required %}<span class="text-red-500 ml-0.5">*</span>{% endif %}
+                    </label>
+                    <div class="[&>input]:w-full [&>input]:px-4 [&>input]:py-2.5 [&>input]:text-sm [&>input]:text-gray-900 [&>input]:dark:text-white [&>input]:bg-gray-50 [&>input]:dark:bg-gray-800 [&>input]:border [&>input]:border-gray-300 [&>input]:dark:border-gray-700 [&>input]:rounded-xl [&>input]:focus:ring-2 [&>input]:focus:ring-teal-500 [&>input]:focus:border-transparent [&>input]:outline-none [&>input]:transition-all
+                              [&>select]:w-full [&>select]:px-4 [&>select]:py-2.5 [&>select]:text-sm [&>select]:text-gray-900 [&>select]:dark:text-white [&>select]:bg-gray-50 [&>select]:dark:bg-gray-800 [&>select]:border [&>select]:border-gray-300 [&>select]:dark:border-gray-700 [&>select]:rounded-xl [&>select]:focus:ring-2 [&>select]:focus:ring-teal-500 [&>select]:outline-none [&>select]:transition-all">
+                        {{ field }}
+                    </div>
+                    {% if field.errors %}
+                    <p class="mt-1.5 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                        {{ field.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <div class="flex items-center gap-3 pt-2">
+                    <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-teal-500 to-emerald-600 hover:from-teal-600 hover:to-emerald-700 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 focus:ring-4 focus:ring-teal-300 dark:focus:ring-teal-800">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Save Changes
+                    </button>
+                    <a href="{% url 'borrow_list' %}" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition-colors">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

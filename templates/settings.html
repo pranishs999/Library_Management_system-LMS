@@ -1,0 +1,161 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="max-w-3xl mx-auto">
+    <!-- Page Header -->
+    <div class="mb-6">
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Settings</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Manage your account profile and security</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="mb-6 border-b border-gray-200 dark:border-gray-800">
+        <ul class="flex gap-1 -mb-px" id="settings-tabs" role="tablist">
+            <li>
+                <button id="tab-profile" data-tab="profile" onclick="switchTab('profile')"
+                    class="tab-btn inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold border-b-2 border-blue-600 text-blue-600 dark:text-blue-400 dark:border-blue-400 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+                    Profile
+                </button>
+            </li>
+            <li>
+                <button id="tab-password" data-tab="password" onclick="switchTab('password')"
+                    class="tab-btn inline-flex items-center gap-2 px-5 py-3 text-sm font-semibold border-b-2 border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 transition-colors">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
+                    Security
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Profile Tab -->
+    <div id="pane-profile">
+        <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+            <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-blue-600 to-indigo-600">
+                <div class="flex items-center gap-3">
+                    <!-- Avatar -->
+                    <div class="w-12 h-12 rounded-xl bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center text-lg font-extrabold text-white flex-shrink-0">
+                        {{ request.user.username|first|upper }}
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-white">{{ request.user.get_full_name|default:request.user.username }}</h2>
+                        <p class="text-sm text-blue-100">{{ request.user.email|default:"No email set" }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <form method="post" class="space-y-5">
+                    {% csrf_token %}
+                    <div class="grid sm:grid-cols-2 gap-5">
+                        {% for field in profile_form %}
+                        <div {% if forloop.last and forloop.counter == 1 %}class="sm:col-span-2"{% endif %}>
+                            <label for="{{ field.id_for_label }}" class="block mb-1.5 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                                {{ field.label }}
+                            </label>
+                            {{ field }}
+                            {% if field.errors %}
+                            <p class="mt-1.5 text-xs text-red-600">{{ field.errors.0 }}</p>
+                            {% endif %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="pt-2 flex gap-3">
+                        <button type="submit" name="update_profile"
+                            class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Save Profile
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Account Info Card -->
+        <div class="mt-5 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-2xl p-5">
+            <div class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+                <div>
+                    <p class="text-sm font-semibold text-blue-800 dark:text-blue-300">Account Information</p>
+                    <p class="text-sm text-blue-600 dark:text-blue-400 mt-1">Member since: {{ request.user.date_joined|date:"F j, Y" }} · Staff: {% if request.user.is_staff %}Yes{% else %}No{% endif %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Security Tab -->
+    <div id="pane-password" class="hidden">
+        <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+            <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-violet-600 to-purple-700">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30">
+                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2 class="text-lg font-bold text-white">Change Password</h2>
+                        <p class="text-sm text-purple-100">Keep your account secure with a strong password</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <form method="post" class="space-y-5">
+                    {% csrf_token %}
+                    {% for field in password_form %}
+                    <div>
+                        <label for="{{ field.id_for_label }}" class="block mb-1.5 text-sm font-semibold text-gray-700 dark:text-gray-300">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                        <p class="mt-1 text-xs text-gray-400 dark:text-gray-500">{{ field.help_text }}</p>
+                        {% endif %}
+                        {% if field.errors %}
+                        <p class="mt-1.5 text-xs text-red-600">{{ field.errors.0 }}</p>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    <div class="pt-2">
+                        <button type="submit" name="change_password"
+                            class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-violet-600 to-purple-700 hover:from-violet-700 hover:to-purple-800 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Update Password
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Danger Zone -->
+        <div class="mt-5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl p-5">
+            <p class="text-sm font-semibold text-red-800 dark:text-red-300 mb-1">Danger Zone</p>
+            <p class="text-sm text-red-600 dark:text-red-400">Use a strong, unique password. Never share your credentials.</p>
+        </div>
+    </div>
+</div>
+
+<script>
+function switchTab(tab) {
+    // Update pane visibility
+    document.getElementById('pane-profile').classList.toggle('hidden', tab !== 'profile');
+    document.getElementById('pane-password').classList.toggle('hidden', tab !== 'password');
+
+    // Update tab button styles
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        const isActive = btn.dataset.tab === tab;
+        btn.classList.toggle('border-blue-600', isActive);
+        btn.classList.toggle('text-blue-600', isActive);
+        btn.classList.toggle('dark:text-blue-400', isActive);
+        btn.classList.toggle('dark:border-blue-400', isActive);
+        btn.classList.toggle('border-transparent', !isActive);
+        btn.classList.toggle('text-gray-500', !isActive);
+        btn.classList.toggle('dark:text-gray-400', !isActive);
+    });
+}
+
+// If password form had errors, open security tab
+{% if password_form.errors %}
+switchTab('password');
+{% endif %}
+</script>
+{% endblock %}

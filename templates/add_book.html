@@ -1,0 +1,66 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-5">
+        <a href="{% url 'book_list' %}" class="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Books</a>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <span class="text-gray-900 dark:text-white font-medium">Add Book</span>
+    </nav>
+
+    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+        <!-- Card Header -->
+        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-blue-600 to-indigo-600">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-white">Add New Book</h2>
+                    <p class="text-sm text-blue-100">Fill in the details to add a book to the library</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Body -->
+        <div class="p-6">
+            <form method="post" class="space-y-5">
+                {% csrf_token %}
+                {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block mb-1.5 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                        {{ field.label }}
+                        {% if field.field.required %}<span class="text-red-500 ml-0.5">*</span>{% endif %}
+                    </label>
+                    <div class="[&>input]:w-full [&>input]:px-4 [&>input]:py-2.5 [&>input]:text-sm [&>input]:text-gray-900 [&>input]:dark:text-white [&>input]:bg-gray-50 [&>input]:dark:bg-gray-800 [&>input]:border [&>input]:border-gray-300 [&>input]:dark:border-gray-700 [&>input]:rounded-xl [&>input]:focus:ring-2 [&>input]:focus:ring-blue-500 [&>input]:focus:border-transparent [&>input]:outline-none [&>input]:transition-all
+                              [&>select]:w-full [&>select]:px-4 [&>select]:py-2.5 [&>select]:text-sm [&>select]:text-gray-900 [&>select]:dark:text-white [&>select]:bg-gray-50 [&>select]:dark:bg-gray-800 [&>select]:border [&>select]:border-gray-300 [&>select]:dark:border-gray-700 [&>select]:rounded-xl [&>select]:focus:ring-2 [&>select]:focus:ring-blue-500 [&>select]:outline-none [&>select]:transition-all
+                              [&>textarea]:w-full [&>textarea]:px-4 [&>textarea]:py-2.5 [&>textarea]:text-sm [&>textarea]:text-gray-900 [&>textarea]:dark:text-white [&>textarea]:bg-gray-50 [&>textarea]:dark:bg-gray-800 [&>textarea]:border [&>textarea]:border-gray-300 [&>textarea]:dark:border-gray-700 [&>textarea]:rounded-xl [&>textarea]:focus:ring-2 [&>textarea]:focus:ring-blue-500 [&>textarea]:outline-none [&>textarea]:transition-all">
+                        {{ field }}
+                    </div>
+                    {% if field.errors %}
+                    <p class="mt-1.5 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                        {{ field.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-3 pt-2">
+                    <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-800">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Add Book
+                    </button>
+                    <a href="{% url 'book_list' %}" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition-colors">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

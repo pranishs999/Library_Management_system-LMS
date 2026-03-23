@@ -1,0 +1,66 @@
+{% extends 'index.html' %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+    <!-- Breadcrumb -->
+    <nav class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-5">
+        <a href="{% url 'patron_list' %}" class="hover:text-pink-600 dark:hover:text-pink-400 transition-colors">Patrons</a>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        <span class="text-gray-900 dark:text-white font-medium">Add Patron</span>
+    </nav>
+
+    <div class="bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 rounded-2xl shadow-sm overflow-hidden">
+        <!-- Card Header -->
+        <div class="px-6 py-5 border-b border-gray-100 dark:border-gray-800 bg-gradient-to-r from-pink-500 to-rose-600">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center border border-white/30">
+                    <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
+                        <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <div>
+                    <h2 class="text-lg font-bold text-white">Add New Patron</h2>
+                    <p class="text-sm text-pink-100">Register a new library member</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Form Body -->
+        <div class="p-6">
+            <form method="post" class="space-y-5">
+                {% csrf_token %}
+                {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block mb-1.5 text-sm font-semibold text-gray-700 dark:text-gray-300">
+                        {{ field.label }}
+                        {% if field.field.required %}<span class="text-red-500 ml-0.5">*</span>{% endif %}
+                    </label>
+                    <div class="[&>input]:w-full [&>input]:px-4 [&>input]:py-2.5 [&>input]:text-sm [&>input]:text-gray-900 [&>input]:dark:text-white [&>input]:bg-gray-50 [&>input]:dark:bg-gray-800 [&>input]:border [&>input]:border-gray-300 [&>input]:dark:border-gray-700 [&>input]:rounded-xl [&>input]:focus:ring-2 [&>input]:focus:ring-pink-500 [&>input]:focus:border-transparent [&>input]:outline-none [&>input]:transition-all
+                              [&>select]:w-full [&>select]:px-4 [&>select]:py-2.5 [&>select]:text-sm [&>select]:text-gray-900 [&>select]:dark:text-white [&>select]:bg-gray-50 [&>select]:dark:bg-gray-800 [&>select]:border [&>select]:border-gray-300 [&>select]:dark:border-gray-700 [&>select]:rounded-xl [&>select]:focus:ring-2 [&>select]:focus:ring-pink-500 [&>select]:outline-none [&>select]:transition-all
+                              [&>textarea]:w-full [&>textarea]:px-4 [&>textarea]:py-2.5 [&>textarea]:text-sm [&>textarea]:text-gray-900 [&>textarea]:dark:text-white [&>textarea]:bg-gray-50 [&>textarea]:dark:bg-gray-800 [&>textarea]:border [&>textarea]:border-gray-300 [&>textarea]:dark:border-gray-700 [&>textarea]:rounded-xl [&>textarea]:focus:ring-2 [&>textarea]:focus:ring-pink-500 [&>textarea]:outline-none [&>textarea]:transition-all">
+                        {{ field }}
+                    </div>
+                    {% if field.errors %}
+                    <p class="mt-1.5 text-xs text-red-600 dark:text-red-400 flex items-center gap-1">
+                        <svg class="w-3.5 h-3.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                        {{ field.errors.0 }}
+                    </p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+
+                <!-- Action Buttons -->
+                <div class="flex items-center gap-3 pt-2">
+                    <button type="submit" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-white bg-gradient-to-r from-pink-500 to-rose-600 hover:from-pink-600 hover:to-rose-700 rounded-xl shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 focus:ring-4 focus:ring-pink-300 dark:focus:ring-pink-800">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                        Add Patron
+                    </button>
+                    <a href="{% url 'patron_list' %}" class="inline-flex items-center gap-2 px-6 py-2.5 text-sm font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-xl transition-colors">
+                        Cancel
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
