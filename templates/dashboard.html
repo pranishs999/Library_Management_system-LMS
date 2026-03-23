@@ -11,8 +11,8 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5 mb-8">
     <!-- Total Books -->
     <div class="card-hover bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
-        <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg shadow-blue-200/50 dark:shadow-blue-900/40">
-            <svg class="w-7 h-7 text-gray-800 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div class="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center" style="background: linear-gradient(135deg, #3b82f6, #4f46e5); box-shadow: 0 4px 14px rgba(59,130,246,0.35);">
+            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M9 4.804A7.968 7.968 0 005.5 4c-1.255 0-2.443.29-3.5.804v10A7.969 7.969 0 015.5 14c1.669 0 3.218.51 4.5 1.385A7.962 7.962 0 0114.5 14c1.255 0 2.443.29 3.5.804v-10A7.968 7.968 0 0014.5 4c-1.255 0-2.443.29-3.5.804V12a1 1 0 11-2 0V4.804z"/>
             </svg>
         </div>
@@ -24,8 +24,8 @@
 
     <!-- Total Patrons -->
     <div class="card-hover bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
-        <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-pink-500 to-rose-600 rounded-2xl flex items-center justify-center shadow-lg shadow-pink-200/50 dark:shadow-pink-900/40">
-            <svg class="w-7 h-7 text-gray-800 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div class="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center" style="background: linear-gradient(135deg, #ec4899, #e11d48); box-shadow: 0 4px 14px rgba(236,72,153,0.35);">
+            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
             </svg>
         </div>
@@ -37,8 +37,8 @@
 
     <!-- Active Borrows -->
     <div class="card-hover bg-white dark:bg-gray-900 border border-gray-100 dark:border-gray-800 rounded-2xl p-5 shadow-sm hover:shadow-md transition-shadow flex items-center gap-4">
-        <div class="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-orange-400 to-amber-500 rounded-2xl flex items-center justify-center shadow-lg shadow-orange-200/50 dark:shadow-orange-900/40">
-            <svg class="w-7 h-7 text-gray-800 dark:text-white" fill="currentColor" viewBox="0 0 20 20">
+        <div class="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center" style="background: linear-gradient(135deg, #fb923c, #f59e0b); box-shadow: 0 4px 14px rgba(251,146,60,0.35);">
+            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"/>
                 <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"/>
             </svg>
@@ -50,9 +50,9 @@
     </div>
 
     <!-- Quick Link Card -->
-    <div class="card-hover bg-gradient-to-br from-blue-600 via-indigo-700 to-purple-700 rounded-2xl p-5 shadow-lg shadow-blue-200/50 dark:shadow-none flex items-center gap-4 group cursor-pointer" onclick="window.location.href='{% url 'add_borrow' %}'">
-        <div class="flex-shrink-0 w-14 h-14 bg-white/20 backdrop-blur-sm rounded-2xl flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform">
-            <svg class="w-7 h-7 text-gray-800 dark:text-white" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="card-hover rounded-2xl p-5 flex items-center gap-4 group cursor-pointer" style="background: linear-gradient(135deg, #2563eb 0%, #4338ca 50%, #7c3aed 100%); box-shadow: 0 8px 24px rgba(37,99,235,0.35);" onclick="window.location.href='{% url 'add_borrow' %}'">
+        <div class="flex-shrink-0 w-14 h-14 rounded-2xl flex items-center justify-center border border-white/30 group-hover:scale-110 transition-transform" style="background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);">
+            <svg class="w-7 h-7 text-white" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
             </svg>
         </div>
